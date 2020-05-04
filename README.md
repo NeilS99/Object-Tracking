@@ -18,3 +18,15 @@
 - After a few iterations, the algorithm finds a number of clusters where all points have shifted and converged.
 - Meanshift can be given a target to track, calculate the color histogram of the target area, and then keep sliding the tracking window to the closest center
 - Just using meanshift won't change the window size if the target moves away or towards the camera. Thus, here we use CAMshift to update the window size.
+
+## Code analysis
+
+### Lucas Kanade
+
+- The points we get from corner detection are going to be tracked
+- The window size has a tradeoff with noise. Smaller windows are more sensitive to noise but can miss out on larger motions
+- Uses Level2 of the image pyramid ie. 1/4th the resolution of the image
+- Criteria is the max number of iterations and the epsilon value shows the tradeoff between speed and accuracy of tracking
+- The mask is just to visuaize the points
+- The calcOpticalFlowPyrLK method calculates the next points on the basis of current, previous image and previous points.
+- It also returns the status array which has a value 1 for the point for which flow has been found
